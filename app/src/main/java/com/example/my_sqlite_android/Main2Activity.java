@@ -161,7 +161,7 @@ public class Main2Activity extends AppCompatActivity {
 
                 if(inputEt) {
                     String codigo = et_codigo.getText().toString();
-                    manto.consultarcodigo(Main2Activity.this, codigo);
+                    manto.consultarCodigo(Main2Activity.this, codigo);
                     limpiarDatos();
                     et_codigo.requestFocus();
                 }

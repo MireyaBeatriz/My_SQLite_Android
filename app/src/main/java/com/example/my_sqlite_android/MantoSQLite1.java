@@ -13,6 +13,12 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,8 +43,6 @@ public class MantoSQLite1 {
     AlertDialog.Builder dialogo;
     ProgressDialog progressDialog;
 
-    //List<Productos> productosList;
-    //List<> productosList;
     ProductsAdapter adapter;
 
     public void guardar(final Context context, final String codigo, final String descripcion, final String precio) {

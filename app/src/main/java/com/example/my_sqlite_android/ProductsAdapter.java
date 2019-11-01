@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>{
@@ -32,11 +34,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
     public void onBindViewHolder(ProductViewHolder holder, int position) {
         Productos product = productList.get(position);
 
-        //loading the image
-
         String im = product.getImagen();
-        //Toast.makeText(mCtx, ""+im, Toast.LENGTH_SHORT).show();
-
 
         if(im.isEmpty()) {
             holder.imageView.setImageResource(R.drawable.imgnoencontrada);

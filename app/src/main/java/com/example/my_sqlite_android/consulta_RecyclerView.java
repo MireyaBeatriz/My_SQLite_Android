@@ -11,6 +11,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -47,8 +51,6 @@ public class consulta_RecyclerView extends AppCompatActivity {
 
                         public void onResponse(String response) {
 
-                            //Toast.makeText(Consulta_RecyclerView.this, ""+response, Toast.LENGTH_SHORT).show();
-
                             try {
                                 JSONArray array = new JSONArray(response);
                                 int totalEncontrados = array.length();
@@ -81,12 +83,7 @@ public class consulta_RecyclerView extends AppCompatActivity {
                 }
             });
 
-            //Volley.newRequestQueue(this).add(stringRequest);
-            // MySingleton.getInstance(this).addToRequestQueue(stringRequest);
-            MySingleton.getInstance(consulta_RecyclerView.this).addToRequestQueue(stringRequest);
+              MySingleton.getInstance(consulta_RecyclerView.this).addToRequestQueue(stringRequest);
         }
-
-
-
 
     }
