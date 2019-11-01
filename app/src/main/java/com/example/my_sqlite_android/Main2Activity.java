@@ -1,6 +1,9 @@
 package com.example.my_sqlite_android;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -35,17 +39,19 @@ public class Main2Activity extends AppCompatActivity {
     boolean estadoGuarda = false;
     boolean estadoEliminar = false;
 
+    AlertDialog.Builder dialogo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back));
-        toolbar.setTitleTextColor(getResources().getColor(R.color.mycolor1));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimaryDark));
         toolbar.setTitleMargin(0, 0, 0, 0);
         toolbar.setSubtitle("MySQL~2019");
-        toolbar.setSubtitleTextColor(getResources().getColor(R.color.mycolor));
+        toolbar.setSubtitleTextColor(getResources().getColor(R.color.design_default_color_primary_dark));
         toolbar.setTitle("Mireya Garcia ");
         setSupportActionBar(toolbar);
 
@@ -60,7 +66,7 @@ public class Main2Activity extends AppCompatActivity {
         btn_consultaDescripcion = (Button) findViewById(R.id.btnConsultar1);
         btn_eliminar = (Button) findViewById(R.id.btnEliminar);
         btn_actualizar = (Button) findViewById(R.id.btnModificar);
-        tv_resultado = (TextView) findViewById(R.id.tv_resultado);
+        //tv_resultado = (TextView) findViewById(R.id.tv_resultado);
 
         try {
             Intent intent = getIntent();
@@ -219,17 +225,94 @@ public class Main2Activity extends AppCompatActivity {
             et_precio.setText(null);
             return true;
         }else if(id == R.id.action_listaArticulos){
-            //Intent spinnerActivity = new Intent(Main2Activity.this, ConsultaSpinner.class);
-            //startActivity(spinnerActivity);
+            Intent spinnerActivity = new Intent(Main2Activity.this, consulta_RecyclerView.class);
+            startActivity(spinnerActivity);
             return true;
-        }else if(id == R.id.action_listaArticulos1){
-            //Intent listViewActivity = new Intent(Main2Activity.this, ListViewArticulos.class);
-            //startActivity(listViewActivity);
+        }else if(id == R.id.action_salir){
+            DialogConfirmacion();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void DialogConfirmacion(){
+        //startActivity(new Intent(getApplicationContext(),MainActivity.class));
+        String mensaje = "¿Realmente desea salir?";
+        dialogo = new AlertDialog.Builder(Main2Activity.this);
+        dialogo.setIcon(R.drawable.ic_close);
+        dialogo.setTitle("Advertencia");
+        dialogo.setMessage(mensaje);
+        dialogo.setCancelable(false);
+        dialogo.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo, int id) {
+                /*Intent intent = new Intent(DashboardLuces.this, luces_control_sms.class);
+                startActivity(intent);*/
+                Main2Activity.this.finishAffinity();
+                //Main2Activity.this.finish();
+            }
+        });
+        dialogo.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo, int id) {
+                Toast.makeText(getApplicationContext(), "Operación Cancelada.", Toast.LENGTH_LONG).show();
+            }
+        });
+        dialogo.show();
+    }
+
+
+    //Creación de HILOS
+    void Hilo(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for(int i=1; i<=1; i++){
+                    demora();
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String cod = getSharedCodigo(Main2Activity.this);
+                        String des = getSharedDescripcion(Main2Activity.this);
+                        String pre = getSharedPrecio(Main2Activity.this);
+
+                        et_codigo.setText(cod);
+                        et_descripcion.setText(des);
+                        et_precio.setText(pre);
+
+                        //Toast.makeText(Main2Activity.this, "Código: "+cod + "\nPrecio: "+pre + "\nDescripción: "+des, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }).start();
+    }
+
+
+    private void demora(){
+        try{
+            Thread.sleep(1000);
+        }catch (InterruptedException e){}
+    }
+
+
+    public String getSharedCodigo(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("profeGamez", MODE_PRIVATE);
+        String codigo = preferences.getString("codigo","0");
+        return codigo;   //return preferences.getString("tiempo", "Sin configurar.");
+    }
+
+    public String getSharedDescripcion(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("profeGamez", MODE_PRIVATE);
+        String descripcion = preferences.getString("descripcion","Sin descripción");
+        return descripcion;   //return preferences.getString("tiempo", "Sin configurar.");
+    }
+
+    public String getSharedPrecio(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("profeGamez", MODE_PRIVATE);
+        String precio = preferences.getString("precio","0.0");
+        return precio;   //return preferences.getString("tiempo", "Sin configurar.");
+    }
+
 
 
 }

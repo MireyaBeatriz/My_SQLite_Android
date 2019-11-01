@@ -26,7 +26,7 @@ import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class MantoSQLite {
+public class MantoSQLite1 {
     Dto datos = new Dto();
 
     boolean estadoGuardar = false;
