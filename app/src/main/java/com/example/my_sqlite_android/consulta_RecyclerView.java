@@ -32,12 +32,14 @@ public class consulta_RecyclerView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consultar_recycleview);
-        recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         productosList = new ArrayList<>();
 
         loadProductos();
+
+    }
 
         private void loadProductos(){
             StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
