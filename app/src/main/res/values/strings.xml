@@ -5,4 +5,10 @@
     <string name="action_settings">Nuevo Registro</string>
     <string name="listarticulos">Lista Spinner</string>
     <string name="listarticulos1">Lista ListView</string>
+
+
+    <string name="salir">Salir</string>
+    <string name="usuario"><u>Registrarme ahora</u></string>
+    <string name="pass"><u>¿Se te olvidó tu contraseña?</u></string>
+    <string name="register"><u><b><i>Copyright</i></b></u></string>
 </resources>
