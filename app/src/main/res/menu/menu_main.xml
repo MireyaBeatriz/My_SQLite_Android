@@ -3,8 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.my_sqlite_android.MainActivity">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:id="@+id/action_limpiar"
+        android:orderInCategory="1"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_listaArticulos"
+        android:icon="@drawable/ic_view_list"
+        android:orderInCategory="2"
+        android:title="@string/listarticulos"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_listaArticulos1"
+        android:icon="@drawable/ic_view"
+        android:orderInCategory="3"
+        android:title="@string/listarticulos1"
+        app:showAsAction="always" />
 </menu>
