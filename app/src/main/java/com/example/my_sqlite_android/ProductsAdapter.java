@@ -34,7 +34,11 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
     public void onBindViewHolder(ProductViewHolder holder, int position) {
         Productos product = productList.get(position);
 
+        //loading the image
+
         String im = product.getImagen();
+        //Toast.makeText(mCtx, ""+im, Toast.LENGTH_SHORT).show();
+
 
         if(im.isEmpty()) {
             holder.imageView.setImageResource(R.drawable.imgnoencontrada);
@@ -69,7 +73,6 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
             imageView = itemView.findViewById(R.id.imageView);
         }
     }
-
 
 
 }

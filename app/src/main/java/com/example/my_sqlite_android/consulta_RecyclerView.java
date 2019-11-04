@@ -32,58 +32,79 @@ public class consulta_RecyclerView extends AppCompatActivity {
     RecyclerView recyclerView;
 
     ProductsAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consultar_recycleview);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+
+        recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         productosList = new ArrayList<>();
+
+        //Toast.makeText(this, "Si", Toast.LENGTH_SHORT).show();
 
         loadProductos();
 
     }
 
-        private void loadProductos(){
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
-                    new Response.Listener<String>() {
 
-                        public void onResponse(String response) {
+    private void loadProductos() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
 
-                            try {
-                                JSONArray array = new JSONArray(response);
-                                int totalEncontrados = array.length();
-                                Toast.makeText(consulta_RecyclerView.this, "Total: "+totalEncontrados, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(Consulta_RecyclerView.this, ""+response, Toast.LENGTH_SHORT).show();
 
-                                for (int i = 0; i < array.length(); i++) {
+                        try {
+                            JSONArray array = new JSONArray(response);
+                            int totalEncontrados = array.length();
+                            Toast.makeText(consulta_RecyclerView.this, "Total: "+totalEncontrados, Toast.LENGTH_SHORT).show();
 
-                                    JSONObject articulosObject = array.getJSONObject(i);
+                            for (int i = 0; i < array.length(); i++) {
 
+                                JSONObject articulosObject = array.getJSONObject(i);
 
-                                    productosList.add(new Productos(
-                                            articulosObject.getInt("codigo"),
-                                            articulosObject.getString("descripcion"),
-                                            articulosObject.getDouble("precio"),
-                                            articulosObject.getString("imagen")
-                                    ));
-                                }
+                                //String img = articulosObject.getString("imagen");
+                                //Toast.makeText(Consulta_RecyclerView.this, ""+img, Toast.LENGTH_SHORT).show();
 
-                                adapter = new ProductsAdapter(consulta_RecyclerView.this, productosList);
-                                recyclerView.setAdapter(adapter);
+                                /*int codigo = articulosObject.getInt("codigo");
+                                String descripcion = articulosObject.getString("descripcion");
+                                double precio = articulosObject.getDouble("precio");
+                                String img = articulosObject.getString("imagen");
+                                Productos objeto = new Productos(codigo, descripcion, precio, img);
+                                productosList.add(objeto);*/
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                                productosList.add(new Productos(
+                                        articulosObject.getInt("codigo"),
+                                        articulosObject.getString("descripcion"),
+                                        articulosObject.getDouble("precio"),
+                                        articulosObject.getString("imagen")
+                                ));
                             }
+
+                            adapter = new ProductsAdapter(consulta_RecyclerView.this, productosList);
+                            recyclerView.setAdapter(adapter);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    }, new Response.ErrorListener() {
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(consulta_RecyclerView.this, "Error. Compruebe su acceso a Internet.", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(consulta_RecyclerView.this, "Error. Compruebe su acceso a Internet.", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-              MySingleton.getInstance(consulta_RecyclerView.this).addToRequestQueue(stringRequest);
-        }
-
+        //Volley.newRequestQueue(this).add(stringRequest);
+        // MySingleton.getInstance(this).addToRequestQueue(stringRequest);
+        MySingleton.getInstance(consulta_RecyclerView.this).addToRequestQueue(stringRequest);
     }
+
+
+
+
+}
