@@ -23,13 +23,13 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class Main2Activity extends AppCompatActivity {
     private EditText et_codigo, et_descripcion, et_precio;
-    private Button btn_guardar, btn_consultaCodigo, btn_consultaDescripcion, btn_eliminar, btn_actualizar;
+    private Button btn_guardar, btn_consultaCodigo, btn_consultaDescripcion,
+            btn_eliminar, btn_actualizar;
     private TextView tv_resultado;
     boolean inputEt=false;
     boolean inputEd=false;
     boolean input1=false;
     int resultadoInsert=0;
-
     String senal = "";
     String codigo = "";
     String descripcion = "";
@@ -58,15 +58,15 @@ public class Main2Activity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
           WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        et_codigo = (EditText) findViewById(R.id.etcodigo);
-        et_descripcion = (EditText) findViewById(R.id.etdescripcion);
-        et_precio = (EditText) findViewById(R.id.etprecio);
-        btn_guardar = (Button) findViewById(R.id.btnGuardar);
-        btn_consultaCodigo = (Button) findViewById(R.id.btnConsultar);
-        btn_consultaDescripcion = (Button) findViewById(R.id.btnConsultar1);
-        btn_eliminar = (Button) findViewById(R.id.btnEliminar);
-        btn_actualizar = (Button) findViewById(R.id.btnModificar);
-        //tv_resultado = (TextView) findViewById(R.id.tv_resultado);
+        et_codigo = (EditText) findViewById(R.id.et_codigo);
+        et_descripcion = (EditText) findViewById(R.id.et_descripcion);
+        et_precio = (EditText) findViewById(R.id.et_precio);
+        btn_guardar = (Button) findViewById(R.id.btn_guardar);
+        btn_consultaCodigo = (Button) findViewById(R.id.btn_consultaCodigo);
+        btn_consultaDescripcion = (Button) findViewById(R.id.btn_consultaDescripcion);
+        btn_eliminar = (Button) findViewById(R.id.btn_eliminar);
+        btn_actualizar = (Button) findViewById(R.id.btn_actualizar);
+        tv_resultado = (TextView) findViewById(R.id.tv_resultado);
 
         try {
             Intent intent = getIntent();
