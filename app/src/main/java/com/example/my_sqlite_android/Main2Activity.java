@@ -61,11 +61,11 @@ public class Main2Activity extends AppCompatActivity {
         et_codigo = (EditText) findViewById(R.id.et_codigo);
         et_descripcion = (EditText) findViewById(R.id.et_descripcion);
         et_precio = (EditText) findViewById(R.id.et_precio);
-        btn_guardar = (Button) findViewById(R.id.btn_guardar);
-        btn_consultaCodigo = (Button) findViewById(R.id.btn_consultaCodigo);
-        btn_consultaDescripcion = (Button) findViewById(R.id.btn_consultaDescripcion);
-        btn_eliminar = (Button) findViewById(R.id.btn_eliminar);
-        btn_actualizar = (Button) findViewById(R.id.btn_actualizar);
+        btn_guardar = (Button) findViewById(R.id.btnguardar);
+        btn_consultaCodigo = (Button) findViewById(R.id.btnconsultar1);
+        btn_consultaDescripcion = (Button) findViewById(R.id.btnconsultar2);
+        btn_eliminar = (Button) findViewById(R.id.btneliminar);
+        btn_actualizar = (Button) findViewById(R.id.btneditar);
         tv_resultado = (TextView) findViewById(R.id.tv_resultado);
 
         try {
