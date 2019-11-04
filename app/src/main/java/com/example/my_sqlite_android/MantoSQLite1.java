@@ -43,45 +43,47 @@ public class MantoSQLite1 {
     AlertDialog.Builder dialogo;
     ProgressDialog progressDialog;
 
+    //List<Productos> productosList;
+    //List<> productosList;
     ProductsAdapter adapter;
 
-    public void guardar(final Context context, final String codigo, final String descripcion, final String precio) {
-        String url = Configur.urlGuardar;
+    public void guardar(final Context context, final String codigo, final String descripcion, final String precio){
+        String url = "http://mjgl.com.sv/mysql_crud/guardar.php";
         //String url = "localhost/democrudsis21a/guardar.php";
         StringRequest request = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
-
+                    @Override
                     public void onResponse(String response) {
                         //En este método se recibe la respuesta en json desde el web service o API.
 
-                        try {
+                        try{
                             JSONObject requestJSON = new JSONObject(response.toString());
                             String estado = requestJSON.getString("estado");
                             String mensaje = requestJSON.getString("mensaje");
 
-                            if (estado.equals("1")) {
+                            if(estado.equals("1")){
                                 Toast.makeText(context, mensaje, Toast.LENGTH_SHORT).show();
                                 //Toast.makeText(context, "Registro almacenado en MySQL.", Toast.LENGTH_SHORT).show();
-                            } else if (mensaje.equals("2")) {
+                            }else if(mensaje.equals("2")){
                                 Toast.makeText(context, "Error. No se pudo guardar.\n" +
                                         "Intentelo mas tarde.", Toast.LENGTH_SHORT).show();
                             }
 
-                        } catch (JSONException e) {
+                        }catch (JSONException e){
                             e.printStackTrace();
                             //Toast.makeText(context, "Se encontrarón problemas...", Toast.LENGTH_SHORT).show();
                         }
 
                     }
                 }, new Response.ErrorListener() {
-
+            @Override
             public void onErrorResponse(VolleyError error) {
                 //En este método se notifica al usuario acerca de un posible error al tratar de
                 //realizar una acción cualquier en la base de datos remota.
                 Toast.makeText(context, "No se puedo guardar. \n" +
                         "Verifique su acceso a internet.", Toast.LENGTH_SHORT).show();
             }
-        }) {
+        }){
             protected Map<String, String> getParams() throws AuthFailureError {
                 //En este método se colocan o se setean los valores a recibir por el fichero *.php
                 Map<String, String> map = new HashMap<>();
@@ -101,10 +103,10 @@ public class MantoSQLite1 {
 
     public boolean guardar1(final Context context, final String codigo, final String descripcion, final String precio) {
         //String url = "http://mjgl.com.sv/mysqlcrud/guardar.php";
-        String url = Configur.urlGuardar;
+        String url  = Configur.urlGuardar;
         StringRequest request = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
-
+                    @Override
                     public void onResponse(String response) {
                         //En este método se recibe la respuesta en json desde el web service o API.
 
@@ -130,7 +132,7 @@ public class MantoSQLite1 {
 
                     }
                 }, new Response.ErrorListener() {
-
+            @Override
             public void onErrorResponse(VolleyError error) {
                 //En este método se notifica al usuario acerca de un posible error al tratar de
                 //realizar una acción cualquier en la base de datos remota.
@@ -157,7 +159,7 @@ public class MantoSQLite1 {
     }
 
 
-    public void eliminar(final Context context, final String codigo) {
+    public void eliminar(final Context context, final String codigo){
 
         progressDialog = new ProgressDialog(context);
 
@@ -165,7 +167,7 @@ public class MantoSQLite1 {
         dialogo.setIcon(R.drawable.ic_delete);
         dialogo.setTitle("¡¡¡Advertencia!!!");
         dialogo.setMessage("¿Realmente desea borrar el registro?\n" +
-                "Código: " + codigo);
+                "Código: "+codigo);
         dialogo.setCancelable(false);
 
         dialogo.setPositiveButton("Aplicar", new DialogInterface.OnClickListener() {
@@ -176,10 +178,10 @@ public class MantoSQLite1 {
                 progressDialog.show();
 
                 //String url = "http://mjgl.com.sv/mysqlcrud/eliminar.php";
-                String url = Configur.urlEliminar;
+                String url  = Configur.urlEliminar;
 
                 StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-
+                    @Override
                     public void onResponse(String response) {
                         try {
                             //Creamos un objeto JSONObject para poder acceder a los atributos (campos) del objeto.
@@ -208,7 +210,7 @@ public class MantoSQLite1 {
                     }
 
                 }, new Response.ErrorListener() {
-
+                    @Override
                     public void onErrorResponse(VolleyError error) {
                         // Hiding the progress dialog after all task complete.
                         progressDialog.dismiss();
@@ -244,25 +246,25 @@ public class MantoSQLite1 {
 
 
     //public void consultarCodigo(final Context context, final String codigo){
-    public void consultarCodigo(final Context context, final String codigo) {
+    public void consultarCodigo(final Context context, final String codigo){
         progressDialog = new ProgressDialog(context);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Espere por favor, Estamos trabajando en su petición en el servidor");
         progressDialog.show();
 
-        String url = Configur.urlConsultaCodigo;
+        String url  = Configur.urlConsultaCodigo;
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
                 url,
                 new Response.Listener<String>() {
                     @RequiresApi(api = Build.VERSION_CODES.M)
                     @SuppressLint("ResourceType")
-
+                    @Override
                     public void onResponse(String response) {
-                        if (response.equals("0")) {
+                        if(response.equals("0")) {
                             Toast.makeText(context, "No se encontrarón resultados para la búsqueda especificada.", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
-                        } else {
+                        }else{
                             try {
                                 /*
                                 Toast toast = Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT);
@@ -292,9 +294,9 @@ public class MantoSQLite1 {
                     }
                 },
                 new Response.ErrorListener() {
-
+                    @Override
                     public void onErrorResponse(VolleyError error) {
-                        if (error != null) {
+                        if(error != null){
                             Toast.makeText(context, "No se ha podido establecer conexión con el servidor. Verifique su acceso a Internet.", Toast.LENGTH_LONG).show();
                             progressDialog.dismiss();
                         }
@@ -302,7 +304,7 @@ public class MantoSQLite1 {
                 }) {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<String, String>();
-                map.put("codigo", codigo);
+                map.put("codigo",codigo);
                 return map;
             }
         };
@@ -312,26 +314,26 @@ public class MantoSQLite1 {
     }
 
 
-    public void consultarDescripcion(final Context context, final String descripcion) {
+    public void consultarDescripcion(final Context context, final String descripcion){
 
         progressDialog = new ProgressDialog(context);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Espere por favor, Estamos trabajando en su petición en el servidor");
         progressDialog.show();
 
-        String url = Configur.urlConsultaDescripcion;
+        String url  = Configur.urlConsultaDescripcion;
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
                 url,
                 new Response.Listener<String>() {
                     @RequiresApi(api = Build.VERSION_CODES.M)
                     @SuppressLint("ResourceType")
-
+                    @Override
                     public void onResponse(String response) {
-                        if (response.equals("0")) {
+                        if(response.equals("0")) {
                             Toast.makeText(context, "No se encontrarón resultados para la búsqueda especificada.", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
-                        } else {
+                        }else{
                             try {
                                 /*
                                 Toast toast = Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT);
@@ -347,13 +349,19 @@ public class MantoSQLite1 {
                                 datos.setDescripcion(descripcion);
                                 datos.setPrecio(Double.parseDouble(precio));
 
+                                //Aca estoy guardando los datos que se obtienen en la consulta desde la base de datos MySQL en
+                                //un archivo xml creado con la clase SharedPreferences.
+                                createfile(context, codigo, descripcion, precio);
+
+                                /*
                                 Intent intent = new Intent(context, Main2Activity.class);
                                 intent.putExtra("senal", "1");
                                 intent.putExtra("codigo", codigo.toString());
                                 intent.putExtra("descripcion", descripcion);
                                 intent.putExtra("precio", precio);
-                                //intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                 context.startActivity(intent);
+                                 */
 
                                 progressDialog.dismiss();
 
@@ -365,9 +373,9 @@ public class MantoSQLite1 {
                     }
                 },
                 new Response.ErrorListener() {
-
+                    @Override
                     public void onErrorResponse(VolleyError error) {
-                        if (error != null) {
+                        if(error != null){
                             Toast.makeText(context, "No se ha podido establecer conexión con el servidor. Verifique su acceso a Internet.", Toast.LENGTH_LONG).show();
                             progressDialog.dismiss();
                         }
@@ -385,7 +393,9 @@ public class MantoSQLite1 {
     }
 
 
-    public ArrayList<String> consultarAllArticulos(final Context context) {
+
+
+    public ArrayList<String> consultarAllArticulos(final Context context){
 
         final ArrayList productosList = new ArrayList<>();  //ArrayList<String>
 
@@ -394,17 +404,17 @@ public class MantoSQLite1 {
         progressDialog.setMessage("Espere por favor, Estamos trabajando en su petición en el servidor");
         progressDialog.show();
 
-        String url = Configur.urlConsultaAllArticulos;
+        String url  = Configur.urlConsultaAllArticulos;
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
-
+                    @Override
                     public void onResponse(String response) {
 
                         try {
                             JSONArray array = new JSONArray(response);
                             int totalEncontrados = array.length();
-                            Toast.makeText(context, "Total: " + totalEncontrados, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Total: "+totalEncontrados, Toast.LENGTH_SHORT).show();
 
                             for (int i = 0; i < array.length(); i++) {
 
@@ -434,7 +444,7 @@ public class MantoSQLite1 {
                         }
                     }
                 }, new Response.ErrorListener() {
-
+            @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, "Error. Compruebe su acceso a Internet.", Toast.LENGTH_SHORT).show();
             }
@@ -448,7 +458,7 @@ public class MantoSQLite1 {
 
 
     //public void modificar(final Context context, final String codigo, final String descripcion, final String precio){
-    public void modificar(final Context context, final Dto datos) {
+    public void modificar(final Context context, final Dto datos){
 
         progressDialog = new ProgressDialog(context);
 
@@ -463,7 +473,7 @@ public class MantoSQLite1 {
                 new Response.Listener<String>() {
                     @RequiresApi(api = Build.VERSION_CODES.M)
                     @SuppressLint("ResourceType")
-
+                    @Override
                     public void onResponse(String response) {
                         try {
                             //Creamos un objeto JSONObject para poder acceder a los atributos (campos) del objeto. Esperando que todo
@@ -475,12 +485,12 @@ public class MantoSQLite1 {
 
                             if (resultJSON.equals("1")) {
 
-                                Toast toast = Toast.makeText(context, "" + result_msj, Toast.LENGTH_LONG);
+                                Toast toast = Toast.makeText(context, ""+result_msj, Toast.LENGTH_LONG);
                                 toast.setGravity(Gravity.CENTER, 0, 0);
                                 toast.show();
 
                             } else if (resultJSON.equals("2")) {
-                                Toast toast = Toast.makeText(context, "" + result_msj, Toast.LENGTH_LONG);
+                                Toast toast = Toast.makeText(context, ""+result_msj, Toast.LENGTH_LONG);
                                 toast.setGravity(Gravity.CENTER, 0, 0);
                                 toast.show();
                             }
@@ -495,7 +505,7 @@ public class MantoSQLite1 {
 
                     }
                 }, new Response.ErrorListener() {
-
+            @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
                 Toast.makeText(context, "Algo salio mal con la conexión al servidor. \nRevise su conexión a Internet.", Toast.LENGTH_LONG).show();
@@ -522,22 +532,22 @@ public class MantoSQLite1 {
 
     }
 
-    public String informacion(Dto datos) {
+    public String informacion(Dto datos){
         String info;
-        info = "Codigo = " + datos.getCodigo() + "\n";
-        info += "Descripción = " + datos.getDescripcion() + "\n";
-        info += "Precio = " + datos.getPrecio() + "\n";
+        info = "Codigo = "+datos.getCodigo() + "\n" ;
+        info += "Descripción = "+datos.getDescripcion() + "\n";
+        info += "Precio = "+datos.getPrecio() + "\n";
         return info;
     }
 
 
-    public void createfile(Context context, String codigo, String descripcion, String precio) {
+    public void createfile(Context context, String codigo, String descripcion, String precio){
         SharedPreferences preferences = context.getSharedPreferences("profeGamez", MODE_PRIVATE);
         //OBTENIENDO LA FECHA Y HORA ACTUAL DEL SISTEMA.
-        DateFormat formatodate = new SimpleDateFormat("yyyy/MM/dd");
-        String date = formatodate.format(new Date());
-        DateFormat formatotime = new SimpleDateFormat("HH:mm:ss a");
-        String time = formatotime.format(new Date());
+        DateFormat formatodate= new SimpleDateFormat("yyyy/MM/dd");
+        String date= formatodate.format(new Date());
+        DateFormat formatotime= new SimpleDateFormat("HH:mm:ss a");
+        String time= formatotime.format(new Date());
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("fecha", date);
         editor.putString("hora", time);
@@ -546,4 +556,27 @@ public class MantoSQLite1 {
         editor.putString("precio", precio);
         editor.commit();
     }
+
+
+    /*
+    public String obtenerCodigo(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("filetime", MODE_PRIVATE);
+        String codigo = preferences.getString("codigo","0");
+        return codigo;   //return preferences.getString("tiempo", "Sin configurar.");
+    }
+
+    public String obtenerDescripcion(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("filetime", MODE_PRIVATE);
+        String descripcion = preferences.getString("descripcion","Sin descripción");
+        return descripcion;   //return preferences.getString("tiempo", "Sin configurar.");
+    }
+
+    public String obtenerPrecio(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("filetime", MODE_PRIVATE);
+        String precio = preferences.getString("precio","0.0");
+        return precio;   //return preferences.getString("tiempo", "Sin configurar.");
+    }
+    */
+
+
 }
